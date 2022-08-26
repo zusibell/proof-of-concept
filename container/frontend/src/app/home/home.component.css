@@ -1,0 +1,16 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 10px;
+}
+.grid-item {
+    padding: 20px;
+    background-color: beige;
+}
+table {
+    border: 1px solid red !important;
+}
+button {
+    background-color: black;
+    color: white;
+}

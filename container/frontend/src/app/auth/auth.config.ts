@@ -6,8 +6,8 @@ export const authConfig: AuthConfig = {
   issuer: 'http://localhost:8080/realms/container',
 
   // URL of the SPA to redirect the user to after login
-  redirectUri: window.location.origin,
-  postLogoutRedirectUri: window.location.origin,
+  redirectUri: 'http://localhost:4000',
+  postLogoutRedirectUri: 'http://localhost:4000',
 
   // The SPA's id. The SPA is registerd with this id at the auth-server
   // clientId: 'server.code',

@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import {  NgModule } from '@angular/core';
+import {  CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AuthConfig, OAuthModule, OAuthModuleConfig } from 'angular-oauth2-oidc';
@@ -33,12 +33,12 @@ import { AuthService } from './auth/auth.service';
       }
     }),
     AppRoutingModule,
-
   ],
   providers: [
     { provide: AuthConfig, useValue: authConfig },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { 
   constructor(private readonly authService: AuthService) {
