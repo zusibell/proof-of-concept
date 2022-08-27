@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Component
 @RestController
-@CrossOrigin(origins = "http://localhost:4100", allowedHeaders = "*")
+@CrossOrigin(origins = {"http://localhost:4100", "http://localhost:4000"}, allowedHeaders = "*")
 @RequestMapping("/api/home")
 public class HomeResource {
 
