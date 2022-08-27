@@ -22,4 +22,8 @@ export class MyTableComponent implements OnInit {
    });
   }
 
+  public clearTable() {
+    this.places = [];
+  }
+
 }
