@@ -11,5 +11,8 @@
   ],
   "include": [
     "src/**/*.d.ts"
-  ]
+  ],
+  "exclude": ["node_modules", "./app/auth/", ".app/auth/**", "auth", "src/app/auth/auth.service.ts", "./src/app/auth/auth.service.ts", "./app/auth/auth.service.ts", "**/app/auth/**"]
+
+
 }

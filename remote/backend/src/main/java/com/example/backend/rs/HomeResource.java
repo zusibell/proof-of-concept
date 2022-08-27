@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ import java.util.List;
 @RequestMapping("/home")
 public class HomeResource {
 
-    @PreAuthorize("hasRole('REMOTE_READ_ALL')")
+    @RolesAllowed("REMOTE_READ_ALL")
     @GetMapping("/overview")
     public List<OverviewData> helloWorld() {
         var overviewData = new ArrayList<OverviewData>();

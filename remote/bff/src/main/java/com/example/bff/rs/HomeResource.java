@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class HomeResource {
 
     private final OverviewService overviewService;
 
-    @PreAuthorize("hasRole('REMOTE_READ_ALL')")
+    @RolesAllowed("REMOTE_READ_ALL")
     @GetMapping("/overview")
     public List<OverviewData> helloWorld() throws Exception {
         return overviewService.getOverviewData();

@@ -1,20 +1,27 @@
 package com.example.bff.dao.impl;
 
 import com.example.bff.domain.ApplicationStatus;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.cxf.helpers.HttpHeaderHelper;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.transport.http.HTTPConduit;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.adapters.RefreshableKeycloakSecurityContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
 import javax.annotation.PostConstruct;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.*;
-import java.lang.annotation.Annotation;
-import java.net.URI;
 import java.util.*;
 import java.util.function.Supplier;
 
+@Slf4j
 public abstract class AbstractRestDao {
 
     private static final String BASE_URL_PATTERN = "client.http.%s.base-url";
@@ -25,6 +32,7 @@ public abstract class AbstractRestDao {
 
     private WebClient template;
     private final String daoName;
+    private boolean sendBearerToken;
 
     public AbstractRestDao(String daoName) {
         this.daoName = daoName;
@@ -48,6 +56,10 @@ public abstract class AbstractRestDao {
         configureClientTemplate(template);
     }
 
+    public final void setSendBearerToken(boolean send){
+        this.sendBearerToken = send;
+    }
+
     private <T> T getProperty(String propertyPattern, Class<T> returnType, T defaultValue) {
         T value = environment.getProperty(String.format(propertyPattern, daoName), returnType);
         if (value == null) {
@@ -58,6 +70,17 @@ public abstract class AbstractRestDao {
 
     protected WebClient createClient() {
         WebClient client = WebClient.fromClient(template, true);
+        if (sendBearerToken){
+            KeycloakPrincipal authentication = (KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            var token = authentication.getKeycloakSecurityContext().getTokenString();
+            log.debug(token);
+
+            if (token != null) {
+                log.debug(token);
+                client.header(HttpHeaderHelper.AUTHORIZATION, "Bearer "+token);
+
+            }
+        }
         return client;
     }
 

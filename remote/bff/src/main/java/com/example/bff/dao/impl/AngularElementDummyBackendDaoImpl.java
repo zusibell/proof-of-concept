@@ -13,6 +13,7 @@ public class AngularElementDummyBackendDaoImpl extends AbstractJsonRestDao imple
 
     public AngularElementDummyBackendDaoImpl() {
         super("angular-element-dummy-backend");
+        setSendBearerToken(true);
     }
 
     @Override
