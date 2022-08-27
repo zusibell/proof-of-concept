@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {  CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -12,6 +12,7 @@ import { authConfig } from './auth/auth.config';
 import { AuthModule } from './auth/auth.module';
 import createOAuthConfig from './auth/oauth-config-factory';
 import { AuthService } from './auth/auth.service';
+import { AppInterceptor } from './app.interceptor';
 
 
 
@@ -36,6 +37,7 @@ import { AuthService } from './auth/auth.service';
   ],
   providers: [
     { provide: AuthConfig, useValue: authConfig },
+    { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
