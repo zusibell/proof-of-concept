@@ -3,7 +3,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
 import { authConfig } from './auth.config';
-import { LoginService } from '../services/login.service';
+import { LoginService } from './login.service';
 
 @Injectable({
   providedIn: 'root'
