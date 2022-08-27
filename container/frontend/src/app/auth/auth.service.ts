@@ -20,8 +20,10 @@ export class AuthService {
     this.authorizationCodeFound = this.configure();
     this.authorizationCodeFound
       .then((found: boolean) => {
-        console.log(found)
         if (found && this.oauthService.hasValidAccessToken()) {
+          while (this.getToken()['azp'] != authConfig.clientId) {
+            this.oauthService.initCodeFlow();
+          }
           this.updateData();
         } else {
           this.oauthService.initCodeFlow();
@@ -52,6 +54,11 @@ export class AuthService {
 
   public getAccessToken() {
     return this.oauthService.getAccessToken(); 
+  }
+
+  private getToken() {
+    const token: Map<string, object> = this.jwtHelperService.decodeToken(this.oauthService.getAccessToken());
+    return JSON.parse(JSON.stringify(token));
   }
 
   private updateData(): void {
