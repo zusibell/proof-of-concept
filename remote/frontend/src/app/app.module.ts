@@ -42,7 +42,7 @@ export class AppModule {
     if (!this.authService.authorizationCodeFound) {
       throw new Error("AppModule stopping.")
     };
-    if (customElements.get('my-private-table') == null || undefined) {
+    if (customElements.get('my-private-table') == undefined) {
       const webComponent = createCustomElement(MyTableComponent, { injector });
       customElements.define('my-private-table', webComponent);
     }
